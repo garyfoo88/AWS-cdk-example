@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import * as cdk from '@aws-cdk/core';
-import { CdkAppExampleStack } from '../lib/cdk-app-example-stack';
+import { FrontendStack } from '../lib/frontend/frontend-stack';
 
 const app = new cdk.App({
   context: {
@@ -11,7 +11,12 @@ const app = new cdk.App({
     }
   }
 });
-new CdkAppExampleStack(app, 'CdkAppExampleStack', {
+
+export const getEnv = (stage: string, key: string) => {
+   app.node.tryGetContext(stage)[key]
+}
+
+new FrontendStack(app, 'org-frontend-dev', {
   /* If you don't specify 'env', this stack will be environment-agnostic.
    * Account/Region-dependent features and context lookups will not work,
    * but a single synthesized template can be deployed anywhere. */
